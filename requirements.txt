@@ -1,0 +1,8 @@
+numpy
+torch>=1.11
+shapeGMMTorch
+nglview
+MDAnalysis
+pickle
+matplotlib
+
