@@ -1,0 +1,16 @@
+TITLE     MDANALYSIS FRAME 0: Created by PDBWriter
+CRYST1   20.233   20.233   20.233  90.00  90.00  90.00 P 1           1
+ATOM      1  CH3 ACE X   1      14.239  17.830  -0.161  1.00  0.00      SYST  
+ATOM      2  C   ACE X   1      14.119  17.492  -1.640  1.00  0.00      SYST  
+ATOM      3  O   ACE X   1      13.710  18.359  -2.409  1.00  0.00      SYST  
+ATOM      4  N   ALA X   2      14.430  16.270  -2.077  1.00  0.00      SYST  
+ATOM      5  H   ALA X   2      14.931  15.669  -1.439  1.00  0.00      SYST  
+ATOM      6  CA  ALA X   2      14.290  15.909  -3.474  1.00  0.00      SYST  
+ATOM      7  HA  ALA X   2      13.328  16.321  -3.781  1.00  0.00      SYST  
+ATOM      8  CB  ALA X   2      15.320  16.520  -4.420  1.00  0.00      SYST  
+ATOM      9  C   ALA X   2      14.320  14.394  -3.608  1.00  0.00      SYST  
+ATOM     10  O   ALA X   2      15.022  13.719  -2.858  1.00  0.00      SYST  
+ATOM     11  N   NME X   3      13.798  13.899  -4.733  1.00  0.00      SYST  
+ATOM     12  H   NME X   3      13.432  14.557  -5.407  1.00  0.00      SYST  
+ATOM     13  CH3 NME X   3      13.580  12.510  -5.080  1.00  0.00      SYST  
+END

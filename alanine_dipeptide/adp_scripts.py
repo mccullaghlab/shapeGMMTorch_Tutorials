@@ -31,8 +31,8 @@ def plot_rama_sgmm_fe(ax,fig,phi,psi,sgmm_obj,title,fontsize=16,contour_levels= 
     nbins  = 32
     range_ = [-180,180]
 
-    phis = calc_dihedrals(sgmm_obj.centers[:,0,:],sgmm_obj.centers[:,2,:],sgmm_obj.centers[:,3,:],sgmm_obj.centers[:,4,:])
-    psis = calc_dihedrals(sgmm_obj.centers[:,2,:],sgmm_obj.centers[:,3,:],sgmm_obj.centers[:,4,:],sgmm_obj.centers[:,6,:])
+    phis = calc_dihedrals(sgmm_obj.centers[:,0,:],sgmm_obj.centers[:,1,:],sgmm_obj.centers[:,2,:],sgmm_obj.centers[:,3,:])
+    psis = calc_dihedrals(sgmm_obj.centers[:,1,:],sgmm_obj.centers[:,2,:],sgmm_obj.centers[:,3,:],sgmm_obj.centers[:,4,:])
     H, xedges, yedges = np.histogram2d(phi, psi, bins=nbins,\
                                    range=[range_, range_], weights=sgmm_obj.train_frame_weights*np.exp(sgmm_obj.train_frame_log_likelihood))
     bin_weights = np.histogram2d(phi, psi, bins=nbins,\
@@ -84,4 +84,28 @@ def plot_rama_metaD_fe(ax,fig,phi,psi,rbias,title,fontsize=16,gamma=10,contour_l
     #cbar = fig.colorbar()
     #cbar.set_label("FE/kT", fontsize=fontsize)
 
-    
+def generate_md_analysis_object(sgmm,atomSel,n_frames=100000):
+    # generate shapeGMM trajectory
+    gen_traj = sgmm.generate(n_frames)
+    # create MDAnalysis universe
+    u = md.Universe.empty(sgmm.n_atoms, 1, atom_resindex=np.zeros(sgmm.n_atoms), trajectory=True)
+    u.trajectory.n_frames = n_frames
+    u.add_TopologyAttr('name', atomSel.names)
+    u.add_TopologyAttr('type', atomSel.types)
+    #u.atoms.names = atomSel.names
+    #u.atom.types = atomSel.types
+    sel_all = u.select_atoms("all")    
+    # write pdb of mean structure of cluster 0
+    pdb_file_name = "ref.pdb"
+    atomSel.write(pdb_file_name)
+    # write trajectory
+    dcd_file_name = "sgmm_" + str(n_frames) + "frames.dcd"
+    # write dcd of generated trajectory
+    with md.Writer(dcd_file_name, sel_all.n_atoms) as W:
+        for ts in range(n_frames):
+            sel_all.positions = gen_traj[ts]
+            W.write(sel_all)
+    W.close()
+    # load  MDAnalysis universe
+    coord = md.Universe(pdb_file_name,dcd_file_name)
+    return coord 
